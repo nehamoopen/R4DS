@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>R4DS Book Club: Chapter 4 &amp; 5</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Neha Moopen" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# R4DS Book Club: Chapter 4 &amp; 5
+## Africa/Europe cohort
+### Neha Moopen
+### updated: 2020-08-17
+
+---
+
+
+## Chapter 4
+# Workflow: basics
+
+---
+
+# 4.1 Coding basics
+
+1. You can use R as a calculator
+
+
+```r
+1 / 200 * 30
+```
+
+```
+## [1] 0.15
+```
+
+```r
+(59 + 73 + 2) / 3
+```
+
+```
+## [1] 44.66667
+```
+
+```r
+sin(pi / 2)
+```
+
+```
+## [1] 1
+```
+
+2. You can create new objects with `&lt;-`
+
+
+```r
+x &lt;- 3 * 4
+
+data &lt;- 76 + 88
+```
+---
+
+## 4.2 What's in a name? 
+
+Object names must start with a letter, and can only contain letters, numbers, underscores (`_`) and periods (`.`). You want to make them sufficiently descriptive so it's sensible. There are different conventions for naming objects, and snake_case is usually most recommended:
+
+1. snake_case (words separated by underscores)
+
+
+```r
+i_use_snake_case &lt;- 1
+```
+
+2. CamelCase (words separated by capitalizing first letters)
+
+
+```r
+otherPeopleUseCamelCase &lt;-1
+```
+
+3. Periods (words separated with periods)
+
+
+```r
+some.people.use.periods &lt;-1 
+```
+
+
+4. Chaos (self-explantory below)
+
+
+```r
+And_aFew.People_RENOUNCEconvention &lt;-1
+```
+---
+
+## 4.2 What's in a name?
+
+You can inspect an object by typing it's name.
+
+
+```r
+x
+```
+
+```
+## [1] 12
+```
+
+```r
+data
+```
+
+```
+## [1] 164
+```
+
+You can also use TAB to have R complete what you're trying to type.
+
+I couldn't figure out what was going with the `this_is_a_really_long_name` assignment, but it also didn't seem too important?
+
+But an important lesson by the end of this sub-section was that R can't and won't work with typos, so `r_rocks` can't be inspected with `r_rock` or `R-rocks`.
+---
+
+## 4.3 Calling functions
+
+R has a lot of functions built-in, there are also functions within packages. 
+
+You can use TAB to auto-complete or bring up a list of functions as you're typing. A floating tooltip will pop up with reminders of the function's argument and purpose, you can also press F1 for more information. 
+
+Once you've selected the relevant functions, R will add opening and closing parentheses. 
+
+Try it out with the `seq` function. Type only `se` and once the list comes up you can either complete with a `q` or click to select. Enter the values once the parentheses are inserted.
+
+
+```r
+seq(1, 10)
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+The same goes with quotation marks. Both parentheses and quotation marks must come in pairs.
+---
+
+## 4.3 Calling functions
+
+Sometimes you want to immediately see the results of what you just computed. Normally you can just type the object name to print the results, but you can also surround the whole assignment with an extra pair of parentheses to automatically print the results. 
+
+The longer way:
+
+```r
+print_test &lt;- seq(1, 10)
+```
+
+
+```r
+print_test
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+The shorter way:
+
+```r
+(print_test &lt;- seq(1, 10))
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+This is less relevant when using code chunks in R Markdown, I'd say.
+
+**LAST POINT:** Take a peek at your environment and it shows all the objects you've created.
+---
+
+## 4.4 Exercise
+
+1. Why would the second line of code not work?
+
+
+```r
+my_variable &lt;- 10
+# my_varıable
+```
+--
+**Answer to 1:** It's just a typo?
+---
+
+## 4.4 Exercise
+
+2. Tweak the R commands so they run correctly:
+
+
+```r
+# library(tidyverse)
+
+# ggplot(dota = mpg) + 
+#  geom_point(mapping = aes(x = displ, y = hwy))
+
+# fliter(mpg, cyl = 8)
+# filter(diamond, carat &gt; 3)
+```
+---
+
+## 4.4 Exercise
+
+**Answer to 2:** 
+
+* ggplot2 package also had to be loaded
+* typo: `dota` should be `data` 
+* typo: `fliter` should be `filter`
+* irrelevant variables? `diamond` &amp; `carat` are not specified as variables in the current `mpg` dataset.
+
+---
+
+## 4.4 Exercise
+
+**Answer to 2:**
+
+```r
+library(tidyverse)
+```
+
+```
+## ── Attaching packages ────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
+```
+
+```
+## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+## ✓ tibble  3.0.1     ✓ dplyr   1.0.0
+## ✓ tidyr   1.1.0     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.5.0
+```
+
+```
+## ── Conflicts ───────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+```
+
+```r
+library(ggplot2)
+```
+---
+
+## 4.4 Exercise
+
+**Answer to 2 (continued):** 
+
+
+```r
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+![](R4DS--Chapter-4---5_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+---
+## 4.4 Exercise
+
+**Answer to 2 (continued):** 
+
+
+```r
+filter(mpg, cyl == 8)
+```
+
+```
+## # A tibble: 70 x 11
+##    manufacturer model     displ  year   cyl trans  drv     cty   hwy fl    class
+##    &lt;chr&gt;        &lt;chr&gt;     &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 audi         a6 quatt…   4.2  2008     8 auto(… 4        16    23 p     mids…
+##  2 chevrolet    c1500 su…   5.3  2008     8 auto(… r        14    20 r     suv  
+##  3 chevrolet    c1500 su…   5.3  2008     8 auto(… r        11    15 e     suv  
+##  4 chevrolet    c1500 su…   5.3  2008     8 auto(… r        14    20 r     suv  
+##  5 chevrolet    c1500 su…   5.7  1999     8 auto(… r        13    17 r     suv  
+##  6 chevrolet    c1500 su…   6    2008     8 auto(… r        12    17 r     suv  
+##  7 chevrolet    corvette    5.7  1999     8 manua… r        16    26 p     2sea…
+##  8 chevrolet    corvette    5.7  1999     8 auto(… r        15    23 p     2sea…
+##  9 chevrolet    corvette    6.2  2008     8 manua… r        16    26 p     2sea…
+## 10 chevrolet    corvette    6.2  2008     8 auto(… r        15    25 p     2sea…
+## # … with 60 more rows
+```
+
+---
+## 4.4 Exercise
+
+Press Alt + Shift + K. What happens? How can you get to the same place using the menus?
+
+--
+
+**Answer to 3**: It pulls up a cheatsheet of keyboard shortcuts. Through the menus, you can get to it by clicking the `Help` button.
+---
+
+## Chapter 5
+# Data Transformation
+
+---
+
+## 5.1 Introduction
+
+Visualization is an important tool, but before you get to that - you might have to transform the data in a way that you need. For example, creating new variables / variable summaries / renaming variables / reordering variables.
+
+## 5.1.1 Prequisites
+
+
+```r
+library(nycflights13)
+library(tidyverse)
+library(ggplot2)
+```
+
+## 5.1.2 nycflights13
+
+We'll be using `nycflights13::flights` which contains data of flights that departed from NYC in 2013. It's documented in `?flights`
+
+Inspect the tibble it by entering `flights` into the console. Or run `View(flights)` to see the whole dataset +++
+---
+
+## 5.1.3 dplyr basics
+
+There are FIVE key functions / _verbs_ in dplyr that can help with most data manipulation tasks.
+
+1. `filter()` to pick observations by their values.
+
+2. `arrange()` to reorder rows
+
+3. `select()` to pick variables by their names.
+
+4. `mutate ()` to create new variables with functions of existing variables.
+
+5. `summarise()` to collapse many values down to a single summary.
+
+**Additionally,**
+
+6. The `group_by()` function can be used to change the scope of the previous functions, like instead of operating on the entire dataset - you can operate on it group-by-group.
+---
+
+## 5.1.3 dplyr basics
+
+All the functions / _verbs_ work similarly:
+
+1. The first argument is a dataframe.
+2. The subsequent arguments describe what to do with the dataframe.
+3. The result is a new data frame.
+
+**Let's see it in action:**
+
+
+```r
+filter(flights, month == 1, day == 1)
+```
+
+```
+## # A tibble: 842 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013     1     1      517            515         2      830            819
+##  2  2013     1     1      533            529         4      850            830
+##  3  2013     1     1      542            540         2      923            850
+##  4  2013     1     1      544            545        -1     1004           1022
+##  5  2013     1     1      554            600        -6      812            837
+##  6  2013     1     1      554            558        -4      740            728
+##  7  2013     1     1      555            600        -5      913            854
+##  8  2013     1     1      557            600        -3      709            723
+##  9  2013     1     1      557            600        -3      838            846
+## 10  2013     1     1      558            600        -2      753            745
+## # … with 832 more rows, and 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,
+## #   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+---
+
+## 5.1.3 dplyr basics
+
+If you want to save the results, use the assignment operator (`&lt;-`). And remember, putting the whole line in parentheses means the operation will be printed as well.
+
+
+```r
+jan1 &lt;- filter(flights, month == 1, day == 1)
+
+(jan1 &lt;- filter(flights, month == 1, day == 1))
+```
+
+```
+## # A tibble: 842 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013     1     1      517            515         2      830            819
+##  2  2013     1     1      533            529         4      850            830
+##  3  2013     1     1      542            540         2      923            850
+##  4  2013     1     1      544            545        -1     1004           1022
+##  5  2013     1     1      554            600        -6      812            837
+##  6  2013     1     1      554            558        -4      740            728
+##  7  2013     1     1      555            600        -5      913            854
+##  8  2013     1     1      557            600        -3      709            723
+##  9  2013     1     1      557            600        -3      838            846
+## 10  2013     1     1      558            600        -2      753            745
+## # … with 832 more rows, and 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,
+## #   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+---
+
+## 5.2.1 Comparisons
+
+To filter effectively, we can use a number of comparison operators:
+
+1. greater than: `&gt;`  
+
+2. greater than + equal to: `&gt;=`
+
+3. less than: `&lt;`
+
+4. less than + equal to: `&lt;=`
+
+5. not equal to: `!=`
+
+6. equal to: `==`
+
+One of the easiest mistakes to make is to use `=` instead of `==` when testing for equality. You'll get an error when that happens. +++
+---
+## 5.2.2 Logical operators
+
+When using multiple arguments within filter, every expression must be `TRUE` in order for a row to be included in the output. 
+
+The options for Boolean operators are:
+
+1. `&amp;` for "and"
+
+2. `|` for "or"
+
+3. `!` for "not"
+---
+
+## 5.2.2 Logical operators
+
+The shaded region shows which parts the operator selects.
+
+![logical operators](https://d33wubrfki0l68.cloudfront.net/01f4b6d39d2be8269740a3ad7946faa79f7243cf/8369a/diagrams/transform-logical.png)
+---
+
+## 5.2.2 Logical operators
+
+The following code finds all flights that departed in November or December:
+
+
+```r
+filter(flights, month == 11 | month == 12)
+```
+
+```
+## # A tibble: 55,403 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013    11     1        5           2359         6      352            345
+##  2  2013    11     1       35           2250       105      123           2356
+##  3  2013    11     1      455            500        -5      641            651
+##  4  2013    11     1      539            545        -6      856            827
+##  5  2013    11     1      542            545        -3      831            855
+##  6  2013    11     1      549            600       -11      912            923
+##  7  2013    11     1      550            600       -10      705            659
+##  8  2013    11     1      554            600        -6      659            701
+##  9  2013    11     1      554            600        -6      826            827
+## 10  2013    11     1      554            600        -6      749            751
+## # … with 55,393 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+---
+
+## 5.2.2 Logical operators
+
+The order of operations doesn’t work like English, but checks each row to see if month equals `11` or `12`, and evaluates it as `TRUE` if it is the case. So you can’t write the code below, because only flights from January pops up then: 
+
+
+```r
+filter(flights, month == (11 | 12))
+```
+
+```
+## # A tibble: 27,004 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013     1     1      517            515         2      830            819
+##  2  2013     1     1      533            529         4      850            830
+##  3  2013     1     1      542            540         2      923            850
+##  4  2013     1     1      544            545        -1     1004           1022
+##  5  2013     1     1      554            600        -6      812            837
+##  6  2013     1     1      554            558        -4      740            728
+##  7  2013     1     1      555            600        -5      913            854
+##  8  2013     1     1      557            600        -3      709            723
+##  9  2013     1     1      557            600        -3      838            846
+## 10  2013     1     1      558            600        -2      753            745
+## # … with 26,994 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;
+```
+---
+
+## 5.2.2 Logical operators
+
+A useful short-hand for this problem is `x %in% y` which selects every row where `x` is one of the values in `y`. We could use it to rewrite the code above:
+
+
+```r
+nov_dec &lt;- filter(flights, month %in% c(11, 12))
+```
+---
+
+## 5.2.2 Logical operators
+
+Sometimes you can simplify complicated subsetting by remembering **De Morgan’s law**: !(x &amp; y) is the same as !x | !y, and !(x | y) is the same as !x &amp; !y.
+
+For example, if you wanted to find flights that weren’t delayed (on arrival or departure) by more than two hours, you could use either of the following two filters:
+
+
+```r
+# filter(flights, !(arr_delay &gt; 120 | dep_delay &gt; 120))
+```
+
+
+```r
+# filter(flights, arr_delay &lt;= 120, dep_delay &lt;= 120)
+```
+
+I feel like this part confused me unnecessarily :/ If someone can explain it better, go for it!
+
+**Final note:** Don't use `&amp;&amp;` and `||` here, that'll come up later.
+---
+
+## 5.2.3 Missing values
+
+Missing values, i.e. `NA`s can be tricky in R. `NA`s are unknown values, and these are 'contagious' in that any operation involving an unknown will return an unknown result.
+
+
+```r
+NA &gt; 5
+```
+
+```
+## [1] NA
+```
+
+```r
+NA + 10
+```
+
+```
+## [1] NA
+```
+
+```r
+NA / 2
+```
+
+```
+## [1] NA
+```
+---
+
+## 5.2.3 Missing values
+
+If you want to determine if a value is missing, use `is.na()`
+
+
+```r
+is.na(x)
+```
+
+```
+## [1] FALSE
+```
+---
+
+## 5.2.3 Missing values
+
+Remember `filter()` only includes rows where the condition is `TRUE`. It excludes both `FALSE` and `NA` values. If you want to preserve missing values, you have to state that explicitly.
+
+
+```r
+df &lt;- tibble(x = c(1, NA, 3))
+```
+
+
+```r
+filter(df, x &gt; 1)
+```
+
+```
+## # A tibble: 1 x 1
+##       x
+##   &lt;dbl&gt;
+## 1     3
+```
+
+
+```r
+filter(df, is.na(x) | x &gt; 1)
+```
+
+```
+## # A tibble: 2 x 1
+##       x
+##   &lt;dbl&gt;
+## 1    NA
+## 2     3
+```
+---
+
+## Exercises
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
