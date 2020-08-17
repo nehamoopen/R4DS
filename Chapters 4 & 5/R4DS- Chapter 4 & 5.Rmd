@@ -1,0 +1,394 @@
+---
+title: "R4DS Book Club: Chapter 4 & 5"
+subtitle: "Africa/Europe cohort"
+author: "Neha Moopen"
+date: "updated: `r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+## Chapter 4
+# Workflow: basics
+
+---
+
+# 4.1 Coding basics
+
+1. You can use R as a calculator
+
+```{r}
+1 / 200 * 30
+
+(59 + 73 + 2) / 3
+
+sin(pi / 2)
+```
+
+2. You can create new objects with `<-`
+
+```{r}
+x <- 3 * 4
+
+data <- 76 + 88
+```
+---
+
+## 4.2 What's in a name? 
+
+Object names must start with a letter, and can only contain letters, numbers, underscores (`_`) and periods (`.`). You want to make them sufficiently descriptive so it's sensible. There are different conventions for naming objects, and snake_case is usually most recommended:
+
+1. snake_case (words separated by underscores)
+
+```{r}
+i_use_snake_case <- 1
+```
+
+2. CamelCase (words separated by capitalizing first letters)
+
+```{r}
+otherPeopleUseCamelCase <-1
+```
+
+3. Periods (words separated with periods)
+
+```{r}
+some.people.use.periods <-1 
+```
+
+
+4. Chaos (self-explantory below)
+
+```{r}
+And_aFew.People_RENOUNCEconvention <-1
+```
+---
+
+## 4.2 What's in a name?
+
+You can inspect an object by typing it's name.
+
+```{r}
+x
+
+data
+```
+
+You can also use TAB to have R complete what you're trying to type.
+
+I couldn't figure out what was going with the `this_is_a_really_long_name` assignment, but it also didn't seem too important?
+
+But an important lesson by the end of this sub-section was that R can't and won't work with typos, so `r_rocks` can't be inspected with `r_rock` or `R-rocks`.
+---
+
+## 4.3 Calling functions
+
+R has a lot of functions built-in, there are also functions within packages. 
+
+You can use TAB to auto-complete or bring up a list of functions as you're typing. A floating tooltip will pop up with reminders of the function's argument and purpose, you can also press F1 for more information. 
+
+Once you've selected the relevant functions, R will add opening and closing parentheses. 
+
+Try it out with the `seq` function. Type only `se` and once the list comes up you can either complete with a `q` or click to select. Enter the values once the parentheses are inserted.
+
+```{r}
+seq(1, 10)
+```
+
+The same goes with quotation marks. Both parentheses and quotation marks must come in pairs.
+---
+
+## 4.3 Calling functions
+
+Sometimes you want to immediately see the results of what you just computed. Normally you can just type the object name to print the results, but you can also surround the whole assignment with an extra pair of parentheses to automatically print the results. 
+
+The longer way:
+```{r}
+print_test <- seq(1, 10)
+```
+
+```{r}
+print_test
+```
+
+The shorter way:
+```{r}
+(print_test <- seq(1, 10))
+```
+
+This is less relevant when using code chunks in R Markdown, I'd say.
+
+**LAST POINT:** Take a peek at your environment and it shows all the objects you've created.
+---
+
+## 4.4 Exercise
+
+1. Why would the second line of code not work?
+
+```{r}
+my_variable <- 10
+# my_varıable
+```
+--
+**Answer to 1:** It's just a typo?
+---
+
+## 4.4 Exercise
+
+2. Tweak the R commands so they run correctly:
+
+```{r}
+# library(tidyverse)
+
+# ggplot(dota = mpg) + 
+#  geom_point(mapping = aes(x = displ, y = hwy))
+
+# fliter(mpg, cyl = 8)
+# filter(diamond, carat > 3)
+```
+---
+
+## 4.4 Exercise
+
+**Answer to 2:** 
+
+* ggplot2 package also had to be loaded
+* typo: `dota` should be `data` 
+* typo: `fliter` should be `filter`
+* irrelevant variables? `diamond` & `carat` are not specified as variables in the current `mpg` dataset.
+
+---
+
+## 4.4 Exercise
+
+**Answer to 2:**
+```{r}
+library(tidyverse)
+library(ggplot2)
+```
+---
+
+## 4.4 Exercise
+
+**Answer to 2 (continued):** 
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+---
+## 4.4 Exercise
+
+**Answer to 2 (continued):** 
+
+```{r}
+filter(mpg, cyl == 8)
+```
+
+---
+## 4.4 Exercise
+
+Press Alt + Shift + K. What happens? How can you get to the same place using the menus?
+
+--
+
+**Answer to 3**: It pulls up a cheatsheet of keyboard shortcuts. Through the menus, you can get to it by clicking the `Help` button.
+---
+
+## Chapter 5
+# Data Transformation
+
+---
+
+## 5.1 Introduction
+
+Visualization is an important tool, but before you get to that - you might have to transform the data in a way that you need. For example, creating new variables / variable summaries / renaming variables / reordering variables.
+
+## 5.1.1 Prequisites
+
+```{r}
+library(nycflights13)
+library(tidyverse)
+library(ggplot2)
+```
+
+## 5.1.2 nycflights13
+
+We'll be using `nycflights13::flights` which contains data of flights that departed from NYC in 2013. It's documented in `?flights`
+
+Inspect the tibble it by entering `flights` into the console. Or run `View(flights)` to see the whole dataset +++
+---
+
+## 5.1.3 dplyr basics
+
+There are FIVE key functions / _verbs_ in dplyr that can help with most data manipulation tasks.
+
+1. `filter()` to pick observations by their values.
+
+2. `arrange()` to reorder rows
+
+3. `select()` to pick variables by their names.
+
+4. `mutate ()` to create new variables with functions of existing variables.
+
+5. `summarise()` to collapse many values down to a single summary.
+
+**Additionally,**
+
+6. The `group_by()` function can be used to change the scope of the previous functions, like instead of operating on the entire dataset - you can operate on it group-by-group.
+---
+
+## 5.1.3 dplyr basics
+
+All the functions / _verbs_ work similarly:
+
+1. The first argument is a dataframe.
+2. The subsequent arguments describe what to do with the dataframe.
+3. The result is a new data frame.
+
+**Let's see it in action:**
+
+```{r}
+filter(flights, month == 1, day == 1)
+```
+---
+
+## 5.1.3 dplyr basics
+
+If you want to save the results, use the assignment operator (`<-`). And remember, putting the whole line in parentheses means the operation will be printed as well.
+
+```{r}
+jan1 <- filter(flights, month == 1, day == 1)
+
+(jan1 <- filter(flights, month == 1, day == 1))
+```
+---
+
+## 5.2.1 Comparisons
+
+To filter effectively, we can use a number of comparison operators:
+
+1. greater than: `>`  
+
+2. greater than + equal to: `>=`
+
+3. less than: `<`
+
+4. less than + equal to: `<=`
+
+5. not equal to: `!=`
+
+6. equal to: `==`
+
+One of the easiest mistakes to make is to use `=` instead of `==` when testing for equality. You'll get an error when that happens. +++
+---
+## 5.2.2 Logical operators
+
+When using multiple arguments within filter, every expression must be `TRUE` in order for a row to be included in the output. 
+
+The options for Boolean operators are:
+
+1. `&` for "and"
+
+2. `|` for "or"
+
+3. `!` for "not"
+---
+
+## 5.2.2 Logical operators
+
+The shaded region shows which parts the operator selects.
+
+![logical operators](https://d33wubrfki0l68.cloudfront.net/01f4b6d39d2be8269740a3ad7946faa79f7243cf/8369a/diagrams/transform-logical.png)
+---
+
+## 5.2.2 Logical operators
+
+The following code finds all flights that departed in November or December:
+
+```{r}
+filter(flights, month == 11 | month == 12)
+```
+---
+
+## 5.2.2 Logical operators
+
+The order of operations doesn’t work like English, but checks each row to see if month equals `11` or `12`, and evaluates it as `TRUE` if it is the case. So you can’t write the code below, because only flights from January pops up then: 
+
+```{r}
+filter(flights, month == (11 | 12))
+```
+---
+
+## 5.2.2 Logical operators
+
+A useful short-hand for this problem is `x %in% y` which selects every row where `x` is one of the values in `y`. We could use it to rewrite the code above:
+
+```{r}
+nov_dec <- filter(flights, month %in% c(11, 12))
+```
+---
+
+## 5.2.2 Logical operators
+
+Sometimes you can simplify complicated subsetting by remembering **De Morgan’s law**: !(x & y) is the same as !x | !y, and !(x | y) is the same as !x & !y.
+
+For example, if you wanted to find flights that weren’t delayed (on arrival or departure) by more than two hours, you could use either of the following two filters:
+
+```{r}
+# filter(flights, !(arr_delay > 120 | dep_delay > 120))
+```
+
+```{r}
+# filter(flights, arr_delay <= 120, dep_delay <= 120)
+```
+
+I feel like this part confused me unnecessarily :/ If someone can explain it better, go for it!
+
+**Final note:** Don't use `&&` and `||` here, that'll come up later.
+---
+
+## 5.2.3 Missing values
+
+Missing values, i.e. `NA`s can be tricky in R. `NA`s are unknown values, and these are 'contagious' in that any operation involving an unknown will return an unknown result.
+
+```{r}
+NA > 5
+
+NA + 10
+
+NA / 2
+```
+---
+
+## 5.2.3 Missing values
+
+If you want to determine if a value is missing, use `is.na()`
+
+```{r}
+is.na(x)
+```
+---
+
+## 5.2.3 Missing values
+
+Remember `filter()` only includes rows where the condition is `TRUE`. It excludes both `FALSE` and `NA` values. If you want to preserve missing values, you have to state that explicitly.
+
+```{r}
+df <- tibble(x = c(1, NA, 3))
+```
+
+```{r}
+filter(df, x > 1)
+```
+
+```{r}
+filter(df, is.na(x) | x > 1)
+```
+---
+
+## Exercises
